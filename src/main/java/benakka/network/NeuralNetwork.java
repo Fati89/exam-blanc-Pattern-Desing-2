@@ -1,5 +1,6 @@
 package benakka.network;
 
+import benakka.decorator.Layer;
 import benakka.enums.NetworkStatus;
 import benakka.observer.NetworkObserver;
 
