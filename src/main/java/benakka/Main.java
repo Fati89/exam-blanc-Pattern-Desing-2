@@ -3,22 +3,35 @@ package benakka;
 import benakka.adapter.ActivationAdapter;
 import benakka.adapter.OldActivationFunction;
 import benakka.adapter.OldSigmoid;
+import benakka.aspects.SecurityContext;
 import benakka.decorator.Layer;
 import benakka.decorator.NormalizationDecorator;
+import benakka.enums.NetworkStatus;
 import benakka.network.BasicLayer;
 import benakka.network.Connection;
 import benakka.network.NeuralNetwork;
 import benakka.network.Neuron;
 import benakka.observer.Dashboard;
+import benakka.observer.NetworkObserver;
 import benakka.strategy.ActivationFunction;
 import benakka.strategy.Identity;
 import benakka.strategy.Sigmoid;
 import benakka.strategy.SoftMax;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.util.Arrays;
 
+@ComponentScan(value = {"benakka"})
 public class Main {
     static void main() {
+        SecurityContext.authenticate("root","1234", new String[]{"ADMIN"});
+
+        ApplicationContext applicationContext=new AnnotationConfigApplicationContext(Main.class);
+        NetworkObserver networkObserver=applicationContext.getBean(NetworkObserver.class);
+        networkObserver.update(NetworkStatus.TRAINED);
+
         NeuralNetwork neuralNetwork = NeuralNetwork.getInstance();
         Dashboard dashboard = new Dashboard();
         neuralNetwork.addObserver(dashboard);
