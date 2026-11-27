@@ -1,5 +1,8 @@
 package benakka;
 
+import benakka.adapter.ActivationAdapter;
+import benakka.adapter.OldActivationFunction;
+import benakka.adapter.OldSigmoid;
 import benakka.network.Connection;
 import benakka.network.Layer;
 import benakka.network.NeuralNetwork;
@@ -18,11 +21,14 @@ public class Main {
         ActivationFunction sgmoid = new Sigmoid();
         ActivationFunction softmax = new SoftMax();
         ActivationFunction identity = new Identity();
+        // Adapter
+        OldActivationFunction oldSigmoid = new OldSigmoid();
+        ActivationFunction adaptedSigmoid = new ActivationAdapter(oldSigmoid);
 
         Neuron ni1 = new Neuron(1, identity, 2);
         Neuron ni2 = new Neuron(1, identity, 3);
         Neuron nh1 = new Neuron(0, identity);
-        Neuron nh2 = new Neuron(0, identity);
+        Neuron nh2 = new Neuron(0, adaptedSigmoid);
         Neuron no1 = new Neuron(1, identity);
         // startegy changer dynamiquement la startegy d'activation
         no1.setActivationFunction(softmax);
