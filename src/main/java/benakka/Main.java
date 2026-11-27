@@ -19,7 +19,7 @@ import java.util.Arrays;
 
 public class Main {
     static void main() {
-        NeuralNetwork neuralNetwork = new NeuralNetwork();
+        NeuralNetwork neuralNetwork = NeuralNetwork.getInstance();
         Dashboard dashboard = new Dashboard();
         neuralNetwork.addObserver(dashboard);
 

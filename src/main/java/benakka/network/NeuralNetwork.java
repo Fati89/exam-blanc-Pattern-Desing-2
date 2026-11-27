@@ -9,13 +9,22 @@ import java.util.List;
 
 public class NeuralNetwork {
 
-    private List<Layer> layers;
+    // -------------- SINGLLOTON ------------------------
+    private static final NeuralNetwork neuralNetwork;
+    static {
+        System.out.println("Singleton instantiation");
+        neuralNetwork = new NeuralNetwork();
+    }
+
+    private NeuralNetwork() {}
+    public static NeuralNetwork getInstance(){
+        return neuralNetwork;
+    }
+    // ------------------------------------------------
+
+    private List<Layer> layers = new ArrayList<>();
     private NetworkStatus status = NetworkStatus.CONSTRUCTION;
     private List<NetworkObserver> observers = new ArrayList<>();
-
-    public NeuralNetwork() {
-        layers = new ArrayList<>();
-    }
 
     public void addLayer(Layer layer) {
         layers.add(layer);
