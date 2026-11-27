@@ -53,6 +53,7 @@ public class Main {
         neuralNetwork.addLayer(hidden);
         neuralNetwork.addLayer(output);
 
+        neuralNetwork.fit();
         System.out.println(Arrays.toString(neuralNetwork.predict()));
 
     }
