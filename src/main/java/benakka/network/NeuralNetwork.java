@@ -1,6 +1,7 @@
 package benakka.network;
 
 import benakka.enums.NetworkStatus;
+import benakka.observer.NetworkObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ public class NeuralNetwork {
 
     private List<Layer> layers;
     private NetworkStatus status = NetworkStatus.CONSTRUCTION;
+    private List<NetworkObserver> observers = new ArrayList<>();
 
     public NeuralNetwork() {
         layers = new ArrayList<>();
@@ -20,16 +22,16 @@ public class NeuralNetwork {
 
     public void train() {
         if (status == NetworkStatus.CONSTRUCTION) {
-            status = NetworkStatus.TRAINING;
+            setStatus(NetworkStatus.TRAINING);
             System.out.println("Opération d'entraînement");
-            status = NetworkStatus.TRAINED;
+            setStatus(NetworkStatus.TRAINED);
         }
     }
 
     public void fit() {
         if (status == NetworkStatus.CONSTRUCTION) {
             System.out.println("Préparation du réseau à l'exécution");
-            status = NetworkStatus.TRAINED;
+            setStatus(NetworkStatus.TRAINED);
         }
     }
 
@@ -62,5 +64,25 @@ public class NeuralNetwork {
             System.out.println("Network is not trained");
             return null;
         }
+    }
+
+    // Observer
+    public void addObserver(NetworkObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(NetworkObserver observer) {
+        observers.remove(observer);
+    }
+
+    private void notifyObservers() {
+        for (NetworkObserver observer : observers) {
+            observer.update(status);
+        }
+    }
+
+    public void setStatus(NetworkStatus status) {
+        this.status = status;
+        notifyObservers();
     }
 }

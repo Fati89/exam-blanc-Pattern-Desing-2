@@ -7,6 +7,7 @@ import benakka.network.Connection;
 import benakka.network.Layer;
 import benakka.network.NeuralNetwork;
 import benakka.network.Neuron;
+import benakka.observer.Dashboard;
 import benakka.strategy.ActivationFunction;
 import benakka.strategy.Identity;
 import benakka.strategy.Sigmoid;
@@ -17,6 +18,8 @@ import java.util.Arrays;
 public class Main {
     static void main() {
         NeuralNetwork neuralNetwork = new NeuralNetwork();
+        Dashboard dashboard = new Dashboard();
+        neuralNetwork.addObserver(dashboard);
 
         ActivationFunction sgmoid = new Sigmoid();
         ActivationFunction softmax = new SoftMax();
