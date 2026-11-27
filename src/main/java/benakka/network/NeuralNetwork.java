@@ -15,12 +15,24 @@ public class NeuralNetwork {
         layers.add(layer);
     }
 
-    public double[] predict(double[] input) {
+    public double[] predict() {
 
-        double[] result = input;
+        double[] result = null;
 
-        for (Layer layer : layers) {
-            result = layer.forward(result);
+        for (int i = 0; i < layers.size(); i++) {
+
+            Layer layer = layers.get(i);
+
+            if (i == 0) {
+                result = new double[layer.getNeurons().size()];
+
+                for (int j = 0; j < layer.getNeurons().size(); j++) {
+                    result[j] = layer.getNeurons().get(j).getOutput();
+                }
+
+            } else {
+                result = layer.forward(result);
+            }
         }
 
         return result;

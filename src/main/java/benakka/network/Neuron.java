@@ -9,6 +9,12 @@ public class Neuron {
 
     private double bias;
     private double output;
+
+    public void setActivationFunction(ActivationFunction activationFunction) {
+        System.out.println("change activation de "+this.activationFunction.getClass().getName()+" à "+activationFunction.getClass().getName());
+        this.activationFunction = activationFunction;
+    }
+
     private ActivationFunction activationFunction;
     private List<Connection> connections = new ArrayList<>();
 
